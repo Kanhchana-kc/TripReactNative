@@ -5,7 +5,11 @@ import WelcomeScreen from './screens/welcomeScreen'; // match file name case
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
-import React from 'react';
+import TabsLayout from './app/tabs/_layout';
+
+
+// import Tabs from './(tabs)/_layout';
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -16,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="tabs" component={TabsLayout} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -10,13 +10,17 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-
 const WelcomeScreen = ({ navigation }) => {
-      const [fontsLoaded] = useFonts({
-    'Martian': require('../assets/fonts/MartianMono-VariableFont_wdth,wght.ttf'),
+  const [fontsLoaded] = useFonts({
+    Martian: require('../assets/fonts/MartianMono-VariableFont_wdth,wght.ttf'),
   });
-    if (!fontsLoaded) {
-    return null; // or a loader/spinner
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (
@@ -30,12 +34,9 @@ const WelcomeScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.content}>
-        <Text navigation style={styles.title}>
-          Welcome to Trip Planner
-        </Text>
+        <Text style={styles.title}>Welcome to Trip Planner</Text>
         <Text style={styles.title_01}>
-          Welcome to Trip Planner!
-          {'\n'}
+          Welcome to Trip Planner!{'\n'}
           Plan your adventures, explore new places, and create memories.
         </Text>
 
@@ -51,33 +52,32 @@ const WelcomeScreen = ({ navigation }) => {
 };
 
 export default WelcomeScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:Colors.color02,
-    marginTop: -20,
-    borderTopRightRadius: 40,
-    borderTopLeftRadius: 40,
-    height: '100%',
-    fontFamily:'Martian'
-    // padding:5
+    backgroundColor: Colors.color02,
   },
   imageContainer: {
-    flex: 2, // Takes about 2/3 of screen
+    flex: 2,
     width: '100%',
+    backgroundColor: '#fff',
   },
   image: {
-    flex: 1,
     width: '100%',
-    height: 500,
+    aspectRatio: 1.7, // Adjust as needed for your image
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
   },
   content: {
-    flex: 1, // Remaining 1/3 for text + button
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
     backgroundColor: '#f2f2f2',
-    fontSize: 30,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
+    marginTop: -40,
   },
   title: {
     fontSize: 27,
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
   },
-  title_01:{
- padding:10,
- textAlign:'center',
- color:Colors. color02,
+  title_01: {
+    padding: 10,
+    textAlign: 'center',
+    color: Colors.color02,
   },
   button: {
     backgroundColor: Colors.color04,
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
+    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
@@ -109,4 +110,3 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
-

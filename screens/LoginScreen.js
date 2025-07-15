@@ -17,16 +17,15 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace('Home');
-      }
-    });
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      navigation.replace('tabs'); // Change 'Home' to 'tabs'
+    }
+  });
 
-    return unsubscribe;
-  }, []);
-
+  return unsubscribe;
+}, []);
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
