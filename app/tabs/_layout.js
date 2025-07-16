@@ -82,10 +82,26 @@ function CustomTabBar({ state, descriptors, navigation }) {
 export default function TabsLayout() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
-      <Tab.Screen name="home" component={Home} />
-      <Tab.Screen name="Discover" component={DiscoverScreen} />
-      <Tab.Screen name="MyTrip" component={MyTripScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+     <Tab.Screen
+    name="home"
+    component={Home}
+    options={{ headerShown: false }}
+  />
+  <Tab.Screen
+    name="Discover"
+    component={DiscoverScreen}
+    options={{ headerShown: false }}
+  />
+  <Tab.Screen
+    name="MyTrip"
+    component={MyTripScreen}
+    options={{ headerShown: false }}
+  />
+  <Tab.Screen
+    name="Profile"
+    component={ProfileScreen}
+    options={{ headerShown: false }}
+  />
     </Tab.Navigator>
   );
 }

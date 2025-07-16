@@ -6,7 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import TabsLayout from './app/tabs/_layout';
-
+import TripDetail from './app/tabs/TripDetail';
 
 // import Tabs from './(tabs)/_layout';
 
@@ -21,6 +21,7 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="tabs" component={TabsLayout} />
+         <Stack.Screen name="TripDetail" component={TripDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
