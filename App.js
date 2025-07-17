@@ -7,7 +7,9 @@ import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import TabsLayout from './app/tabs/_layout';
 import TripDetail from './app/tabs/TripDetail';
-// import Tabs from './(tabs)/_layout';
+import Trips from './screens/Trips';   
+import Guides from './screens/Guides';  
+import Search from './screens/SearchScreen'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,9 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="tabs" component={TabsLayout} />
          <Stack.Screen name="TripDetail" component={TripDetail} />
+           <Stack.Screen name="Trips" component={Trips} />
+  <Stack.Screen name="Guides" component={Guides} />
+  <Stack.Screen name='Search' component={Search} />
         
       </Stack.Navigator>
     </NavigationContainer>

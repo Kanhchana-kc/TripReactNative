@@ -8,7 +8,6 @@ import MyTripScreen from './mytrip';
 import ProfileScreen from './profile';
 import Home from './home';
 import Add from './add';
-
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
@@ -96,6 +95,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
 export default function TabsLayout() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
+      
       <Tab.Screen
         name="home"
         component={Home}

@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import FloatingMenu from '../Menu/FloatingMenu'; // correct path
 
 const Add = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      {/* Your main screen content */}
       <FloatingMenu
-        onTripPlan={() => Alert.alert('Trip plan')}
-        onGuide={() => Alert.alert('Guide')}
+        onTripPlan={() => navigation.navigate('Trips')}
+        onGuide={() => navigation.navigate('Guides')}
       />
     </View>
   );

@@ -4,8 +4,8 @@ import { auth } from '../../firebase';
 import { Colors } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Guides from '../Guides';
-import Trips from '../Trips';
+// import Guides from '../Guides';
+// import Trips from '../Trips';
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState('Trips');
@@ -26,11 +26,13 @@ export default function Profile() {
   };
 
   const handlePlanTrip = () => {
-    navigation.navigate('Trips');
+navigation.navigate('Trips');
   };
 
   const handleCreateGuide = () => {
-    navigation.navigate('Guides');
+   
+navigation.navigate('Guides');
+
   };
 
   const handleEditProfilePicture = () => {
