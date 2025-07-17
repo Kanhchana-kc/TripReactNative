@@ -7,10 +7,13 @@ import DiscoverScreen from './discover';
 import MyTripScreen from './mytrip';
 import ProfileScreen from './profile';
 import Home from './home';
+import Add from './add';
 
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
+  const currentRoute = state.routeNames[state.index];
+
   return (
     <View style={styles.tabContainer}>
       {/* Home */}
@@ -21,9 +24,11 @@ function CustomTabBar({ state, descriptors, navigation }) {
         <Ionicons
           name="home-outline"
           size={24}
-          color={state.index === 0 ? '#673ab7' : '#222'}
+          color={currentRoute === 'home' ? '#673ab7' : '#222'}
         />
-        <Text style={state.index === 0 ? styles.active : styles.inactive}>Home</Text>
+        <Text style={currentRoute === 'home' ? styles.active : styles.inactive}>
+          Home
+        </Text>
       </TouchableOpacity>
 
       {/* Discover */}
@@ -34,18 +39,19 @@ function CustomTabBar({ state, descriptors, navigation }) {
         <Ionicons
           name="search-outline"
           size={24}
-          color={state.index === 1 ? '#673ab7' : '#222'}
+          color={currentRoute === 'Discover' ? '#673ab7' : '#222'}
         />
-        <Text style={state.index === 1 ? styles.active : styles.inactive}>Discover</Text>
+        <Text
+          style={currentRoute === 'Discover' ? styles.active : styles.inactive}
+        >
+          Discover
+        </Text>
       </TouchableOpacity>
 
       {/* Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => {
-          console.log('Add pressed!');
-          // Open modal or navigate
-        }}
+        onPress={() => navigation.navigate('Add')} // <-- Add this screen to Tab.Navigator
       >
         <Ionicons name="add" size={32} color="#fff" />
       </TouchableOpacity>
@@ -58,9 +64,13 @@ function CustomTabBar({ state, descriptors, navigation }) {
         <Ionicons
           name="briefcase-outline"
           size={24}
-          color={state.index === 2 ? '#673ab7' : '#222'}
+          color={currentRoute === 'MyTrip' ? '#673ab7' : '#222'}
         />
-        <Text style={state.index === 2 ? styles.active : styles.inactive}>MyTrip</Text>
+        <Text
+          style={currentRoute === 'MyTrip' ? styles.active : styles.inactive}
+        >
+          MyTrip
+        </Text>
       </TouchableOpacity>
 
       {/* Profile */}
@@ -71,9 +81,13 @@ function CustomTabBar({ state, descriptors, navigation }) {
         <Ionicons
           name="person-outline"
           size={24}
-          color={state.index === 3 ? '#673ab7' : '#222'}
+          color={currentRoute === 'Profile' ? '#673ab7' : '#222'}
         />
-        <Text style={state.index === 3 ? styles.active : styles.inactive}>Profile</Text>
+        <Text
+          style={currentRoute === 'Profile' ? styles.active : styles.inactive}
+        >
+          Profile
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -82,26 +96,34 @@ function CustomTabBar({ state, descriptors, navigation }) {
 export default function TabsLayout() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
-     <Tab.Screen
-    name="home"
-    component={Home}
-    options={{ headerShown: false }}
-  />
-  <Tab.Screen
-    name="Discover"
-    component={DiscoverScreen}
-    options={{ headerShown: false }}
-  />
-  <Tab.Screen
-    name="MyTrip"
-    component={MyTripScreen}
-    options={{ headerShown: false }}
-  />
-  <Tab.Screen
-    name="Profile"
-    component={ProfileScreen}
-    options={{ headerShown: false }}
-  />
+      <Tab.Screen
+        name="home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Discover"
+        component={DiscoverScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Add"
+        component={Add}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null, // hide from tab bar
+        }}
+      />
+      <Tab.Screen
+        name="MyTrip"
+        component={MyTripScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }

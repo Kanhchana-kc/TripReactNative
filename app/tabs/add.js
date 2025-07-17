@@ -1,10 +1,24 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
+import FloatingMenu from '../Menu/FloatingMenu'; // correct path
 
-export default function Add() {
+const Add = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Add</Text>
+    <View style={styles.container}>
+      {/* Your main screen content */}
+      <FloatingMenu
+        onTripPlan={() => Alert.alert('Trip plan')}
+        onGuide={() => Alert.alert('Guide')}
+      />
     </View>
   );
-}
+};
+
+export default Add;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
