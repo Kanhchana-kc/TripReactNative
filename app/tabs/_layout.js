@@ -8,6 +8,7 @@ import MyTripScreen from './mytrip';
 import ProfileScreen from './profile';
 import Home from './home';
 import Add from './add';
+import SearchScreen from '../../screens/SearchScreen'; // Ensure this path is correct
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
@@ -16,6 +17,16 @@ function CustomTabBar({ state, descriptors, navigation }) {
   return (
     <View style={styles.tabContainer}>
       {/* Home */}
+      <TouchableOpacity
+        style={{ position: 'absolute', right: 20, top: -30 }}
+        onPress={() => {
+          // handle open modal, search bar, or navigate
+          navigation.navigate('SearchScreen');
+        }}
+      >
+        <Ionicons name="search" size={24} color="#000" />
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.tabButton}
         onPress={() => navigation.navigate('home')}
@@ -87,6 +98,11 @@ function CustomTabBar({ state, descriptors, navigation }) {
         >
           Profile
         </Text>
+        <Tab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{ headerShown: false }}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -95,7 +111,6 @@ function CustomTabBar({ state, descriptors, navigation }) {
 export default function TabsLayout() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
-      
       <Tab.Screen
         name="home"
         component={Home}
