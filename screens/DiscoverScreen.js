@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons'; // Make sure this is installed
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Discover() {
   const navigation = useNavigation();

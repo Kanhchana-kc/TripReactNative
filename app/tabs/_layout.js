@@ -8,7 +8,8 @@ import MyTripScreen from './mytrip';
 import ProfileScreen from './profile';
 import Home from './home';
 import Add from './add';
-import SearchScreen from '../../screens/SearchScreen'; // Ensure this path is correct
+import SearchScreen from '../../screens/SearchScreen'; // check path
+
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
@@ -16,17 +17,15 @@ function CustomTabBar({ state, descriptors, navigation }) {
 
   return (
     <View style={styles.tabContainer}>
-      {/* Home */}
+      {/* Search Icon */}
       <TouchableOpacity
         style={{ position: 'absolute', right: 20, top: -30 }}
-        onPress={() => {
-          // handle open modal, search bar, or navigate
-          navigation.navigate('SearchScreen');
-        }}
+        onPress={() => navigation.navigate('SearchScreen')}
       >
         <Ionicons name="search" size={24} color="#000" />
       </TouchableOpacity>
 
+      {/* Home */}
       <TouchableOpacity
         style={styles.tabButton}
         onPress={() => navigation.navigate('home')}
@@ -51,9 +50,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
           size={24}
           color={currentRoute === 'Discover' ? '#673ab7' : '#222'}
         />
-        <Text
-          style={currentRoute === 'Discover' ? styles.active : styles.inactive}
-        >
+        <Text style={currentRoute === 'Discover' ? styles.active : styles.inactive}>
           Discover
         </Text>
       </TouchableOpacity>
@@ -61,7 +58,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
       {/* Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('Add')} // <-- Add this screen to Tab.Navigator
+        onPress={() => navigation.navigate('Add')}
       >
         <Ionicons name="add" size={32} color="#fff" />
       </TouchableOpacity>
@@ -76,9 +73,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
           size={24}
           color={currentRoute === 'MyTrip' ? '#673ab7' : '#222'}
         />
-        <Text
-          style={currentRoute === 'MyTrip' ? styles.active : styles.inactive}
-        >
+        <Text style={currentRoute === 'MyTrip' ? styles.active : styles.inactive}>
           MyTrip
         </Text>
       </TouchableOpacity>
@@ -93,16 +88,9 @@ function CustomTabBar({ state, descriptors, navigation }) {
           size={24}
           color={currentRoute === 'Profile' ? '#673ab7' : '#222'}
         />
-        <Text
-          style={currentRoute === 'Profile' ? styles.active : styles.inactive}
-        >
+        <Text style={currentRoute === 'Profile' ? styles.active : styles.inactive}>
           Profile
         </Text>
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{ headerShown: false }}
-        />
       </TouchableOpacity>
     </View>
   );
@@ -126,7 +114,7 @@ export default function TabsLayout() {
         component={Add}
         options={{
           headerShown: false,
-          tabBarButton: () => null, // hide from tab bar
+          tabBarButton: () => null, // hide default tab bar button
         }}
       />
       <Tab.Screen
@@ -138,6 +126,14 @@ export default function TabsLayout() {
         name="Profile"
         component={ProfileScreen}
         options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
       />
     </Tab.Navigator>
   );

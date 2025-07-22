@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import SearchScreen from '../../screens/SearchScreen';
 
 const featuredTrips = [
   {
@@ -23,6 +24,24 @@ const featuredTrips = [
     title: 'Beach Relaxation',
     description: 'Enjoy the pristine beaches of Sihanoukville.',
     image: 'https://example.com/sihanoukville.jpg',
+  },
+  {
+    id: '5',
+    title: 'Siem Reap Night Market',
+    description: 'Experience vibrant markets and street food in Siem Reap.',
+    image: 'https://example.com/siem-reap-market.jpg',
+  },
+  {
+    id: '6',
+    title: 'Kampot River Cruise',
+    description: 'Relax on a serene river cruise in Kampot.',
+    image: 'https://example.com/kampot-river.jpg',
+  },
+  {
+    id: '7',
+    title: 'Koh Rong Island',
+    description: 'Visit the crystal-clear beaches of Koh Rong.',
+    image: 'https://example.com/koh-rong.jpg',
   },
 ];
 
@@ -39,7 +58,27 @@ const popularTrips = [
     description: 'Explore Cambodia’s countryside and ancient temples.',
     image: 'https://example.com/battambang.jpg',
   },
+  {
+    id: '8',
+    title: 'Cardamom Mountains Trek',
+    description: 'Hike through Cambodia’s lush mountains and wildlife.',
+    image: 'https://example.com/cardamom-trek.jpg',
+  },
+  {
+    id: '9',
+    title: 'Tonle Sap Lake Tour',
+    description: 'See floating villages and unique lake life on Tonle Sap.',
+    image: 'https://example.com/tonle-sap.jpg',
+  },
+  {
+    id: '10',
+    title: 'Preah Vihear Temple',
+    description: 'Discover a mountaintop temple with stunning views.',
+    image: 'https://example.com/preah-vihear.jpg',
+  },
 ];
+
+const allTrips = [...featuredTrips, ...popularTrips];
 
 export default function Home() {
   const navigation = useNavigation();
@@ -57,6 +96,7 @@ export default function Home() {
     </TouchableOpacity>
   );
 
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Welcome to Trip Planner!</Text>
@@ -70,6 +110,8 @@ export default function Home() {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.tripList}
       />
+
+      <SearchScreen data={allTrips} />
 
       <Text style={styles.subHeader}>Popular Trips</Text>
       <FlatList
@@ -86,8 +128,19 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  header: { fontSize: 26, fontWeight: 'bold', marginBottom: 12, color: '#333' },
-  subHeader: { fontSize: 20, fontWeight: '600', marginVertical: 8, color: '#555' },
+  header: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: '#333',
+    textAlign: 'center',
+  },
+  subHeader: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginVertical: 8,
+    color: '#555',
+  },
   tripList: { paddingVertical: 10 },
   tripCard: {
     width: 220,
