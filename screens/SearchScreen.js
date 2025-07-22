@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     // backgroundColor: 'blue',
-    height: '1000px',
+    height: "10px", // ✅ fixed height for the list
   },
 });

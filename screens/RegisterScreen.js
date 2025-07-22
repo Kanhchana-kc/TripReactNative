@@ -52,31 +52,26 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = async () => {
-    if (!validate()) return;
+   if (!validate()) return;
 
-    try {
-      setLoading(true);
-
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email.trim(),
-        password
-      );
+  signInWithEmailAndPassword(auth, email.trim(), password)
+    .then((userCredentials) => {
       const user = userCredentials.user;
+      console.log('Logged in with:', user.email);
+    })
+    .catch((error) => {
+      let message = 'An unexpected error occurred. Please try again.';
 
-      await setDoc(doc(db, 'users', user.uid), {
-        username: username.trim(),
-        email: email.trim(),
-        createdAt: serverTimestamp(),
-      });
+      if (error.code === 'auth/invalid-email') {
+        message = 'Please enter a valid email address.';
+      } else if (error.code === 'auth/user-not-found') {
+        message = 'No account found with this email.';
+      } else if (error.code === 'auth/wrong-password') {
+        message = 'Incorrect password. Please try again.';
+      }
 
-      console.log('Registered:', user.email);
-      navigation.replace('Home');
-    } catch (error) {
-      setErrors({ api: error.message });
-    } finally {
-      setLoading(false);
-    }
+      alert(message);
+    });
   };
 
   return (
@@ -175,29 +170,46 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: Colors.color04,
+    backgroundColor: Colors.color04, // use your theme color
     width: '100%',
-    padding: 15,
-    borderRadius: 5,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     alignItems: 'center',
+    marginTop: 10,
   },
   buttonDisabled: {
-    backgroundColor: '#aaa',
+    backgroundColor: '#ccc',
   },
   buttonOutline: {
     backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: Colors.color02,
+    marginTop: 10,
+    borderColor: Colors.color04,
     borderWidth: 2,
+    width: '100%',
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 15,
   },
   buttonOutlineText: {
     color: Colors.color04,
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 15,
   },
 });

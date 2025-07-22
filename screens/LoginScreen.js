@@ -8,26 +8,49 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Colors } from '../constants/Colors';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
 
   const navigation = useNavigation();
 
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigation.replace('tabs'); // Change 'Home' to 'tabs'
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.replace('tabs'); // Change 'Home' to 'tabs'
+      }
+    });
 
-  return unsubscribe;
-}, []);
+    return unsubscribe;
+  }, []);
+
+  const validate = () => {
+    let valid = true;
+    let newErrors = {};
+
+    if (!email.trim()) {
+      newErrors.email = 'Email is required';
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+    if (!validate()) return;
+
+    signInWithEmailAndPassword(auth, email.trim(), password)
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log('Logged in with:', user.email);
@@ -48,6 +71,8 @@ useEffect(() => {
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
         />
+        {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
         <TextInput
           placeholder="Password"
           value={password}
@@ -55,12 +80,16 @@ useEffect(() => {
           style={styles.input}
           secureTextEntry
         />
+        {errors.password && (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        )}
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={goToRegister}
           style={[styles.button, styles.buttonOutline]}
@@ -90,6 +119,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
+  errorText: {
+    color: 'red',
+    alignSelf: 'flex-start',
+    marginLeft: 5,
+    marginTop: 2,
+  },
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
@@ -97,26 +132,43 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: Colors.color04,
     width: '100%',
-    padding: 15,
-    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     alignItems: 'center',
+    marginTop: 10,
   },
   buttonOutline: {
     backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: Colors.color04,
     borderWidth: 2,
+    width: '100%',
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    borderRadius: 30,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    alignItems: 'center',
+    marginTop: 10,
   },
   buttonText: {
     color: 'white',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 15,
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#094f06ff',
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 15,
   },
 });

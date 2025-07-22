@@ -141,7 +141,7 @@ navigation.navigate('Guides');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.color02,
+    // backgroundColor: Colors.color02,
   },
   scrollContent: {
     alignItems: 'center',
@@ -159,6 +159,9 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
     backgroundColor: '#ddd',
+    borderWidth: 2,
+    borderColor: '#fff' ,
+  
   },
   editIcon: {
     position: 'absolute',
