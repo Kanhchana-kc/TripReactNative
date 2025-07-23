@@ -1,0 +1,18 @@
+{
+  "trips": [
+    {
+      "id": "1",
+      "destination": "Paris",
+      "startDate": "2025-08-01",
+      "endDate": "2025-08-10",
+      "privacy": "Public"
+    },
+    {
+      "id": "2",
+      "destination": "Tokyo",
+      "startDate": "2025-09-05",
+      "endDate": "2025-09-15",
+      "privacy": "Friends"
+    }
+  ]
+}
