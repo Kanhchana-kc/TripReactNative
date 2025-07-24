@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, Alert, StyleSheet } from 'react-native';
 import api from '../../api/api';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditTrip({ route, navigation }) {
   const { id } = route.params;

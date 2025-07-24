@@ -1,12 +1,11 @@
+// tripsDetail.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import api from '../../api/api';
-import { useIsFocused } from '@react-navigation/native';
 
-export default function TripDetail({ route, navigation }) {
-  const [trip, setTrip] = useState(null);
+export default function tripsDetail({ route }) {
   const { id } = route.params;
-  const isFocused = useIsFocused();
+  const [trip, setTrip] = useState(null);
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -14,35 +13,25 @@ export default function TripDetail({ route, navigation }) {
         const res = await api.get(`/trips/${id}`);
         setTrip(res.data);
       } catch (error) {
-        Alert.alert('Error', 'Failed to load trip data');
-        navigation.goBack();
+        console.error('Failed to load trip', error);
       }
     };
-    fetchTrip();
-  }, [isFocused, id, navigation]);
 
-  if (!trip)
-    return (
-      <View style={[styles.container, { justifyContent: 'center', flex: 1 }]}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    fetchTrip();
+  }, [id]);
+
+  if (!trip) return <Text>Loading...</Text>;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Destination: {trip.destination}</Text>
-      <Text style={styles.label}>Start Date: {trip.startDate}</Text>
-      <Text style={styles.label}>End Date: {trip.endDate}</Text>
-      <Text style={styles.label}>Privacy: {trip.privacy}</Text>
-      <Button
-        title="Edit"
-        onPress={() => navigation.navigate('Edit', { id })}
-      />
+      <Text style={styles.title}>{trip.destination}</Text>
+      <Text>Date: {trip.startDate} - {trip.endDate}</Text>
+      <Text>Privacy: {trip.privacy}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { padding: 20 },
-  label: { fontSize: 18, marginBottom: 10 },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
 });

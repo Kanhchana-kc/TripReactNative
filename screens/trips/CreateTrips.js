@@ -8,9 +8,11 @@ import {
   ScrollView,
   Text,
 } from 'react-native';
-import api from '../../api/api';
-
-export default function CreateTrip({ navigation }) {
+import api from '../../api/api'; // Adjust the import path as necessary
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Platform } from 'react-native';
+import TripList from './TripsList';
+export default function CreateTrips({ navigation }) {
   const [form, setForm] = useState({
     destination: '',
     startDate: '',
@@ -25,33 +27,44 @@ export default function CreateTrip({ navigation }) {
   // Simple date validation: YYYY-MM-DD format
   const isValidDate = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date);
 
-  const createTrip = async () => {
-    const { destination, startDate, endDate, privacy } = form;
+ const createTrip = async () => {
+  const { destination, startDate, endDate, privacy } = form;
 
-    if (!destination || !startDate || !endDate || !privacy) {
-      Alert.alert('Error', 'All fields are required.');
-      return;
-    }
+  if (!destination || !startDate || !endDate || !privacy) {
+    Alert.alert('Error', 'All fields are required.');
+    return;
+  }
 
-    if (!isValidDate(startDate) || !isValidDate(endDate)) {
-      Alert.alert('Error', 'Dates must be in YYYY-MM-DD format.');
-      return;
-    }
+  if (!isValidDate(startDate) || !isValidDate(endDate)) {
+    Alert.alert('Error', 'Dates must be in YYYY-MM-DD format.');
+    return;
+  }
 
-    if (!['Public', 'Friends', 'Private'].includes(privacy)) {
-      Alert.alert('Error', 'Privacy must be Public, Friends, or Private.');
-      return;
-    }
+  if (!['Public', 'Friends', 'Private'].includes(privacy)) {
+    Alert.alert('Error', 'Privacy must be Public, Friends, or Private.');
+    return;
+  }
 
-    try {
-      await api.post('/trips', form);
-      Alert.alert('Success', 'Trip created successfully!');
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to create trip.');
-      console.error(error);
-    }
-  };
+  try {
+    await api.post('/trips', form);
+
+    // Show alert with a custom OK button
+    Alert.alert(
+      'Success',
+      'Trip created successfully!',
+      [
+        {
+          text: 'OK',
+          onPress: () => navigation.navigate('TripList'), // <- Navigate here
+        },
+      ],
+      { cancelable: false }
+    );
+  } catch (error) {
+    Alert.alert('Error', 'Failed to create trip.');
+    console.error(error);
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

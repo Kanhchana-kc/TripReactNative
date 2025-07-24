@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image, Modal, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Modal,
+  ScrollView,
+} from 'react-native';
 import { auth } from '../../firebase';
 import { Colors } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import Guides from '../Guides';
 // import Trips from '../Trips';
-
+import CreateTrips from '../../screens/trips/CreateTrips';
 export default function Profile() {
-  const [activeTab, setActiveTab] = useState('Trips');
+  const [activeTab, setActiveTab] = useState('CreateTripsrips');
   const [isSheetVisible, setSheetVisible] = useState(false);
   const navigation = useNavigation();
 
-  const userPhotoURL = auth.currentUser?.photoURL || 'https://via.placeholder.com/80';
+  const userPhotoURL =
+    auth.currentUser?.photoURL || 'https://via.placeholder.com/80';
   const userName = auth.currentUser?.displayName || 'Your Name';
   const userHandle = auth.currentUser?.email?.split('@')[0] || 'username';
 
@@ -26,13 +35,11 @@ export default function Profile() {
   };
 
   const handlePlanTrip = () => {
-navigation.navigate('Trips');
+    navigation.navigate('CreateTrips'); // or 'TripList' if you want to show the list instead
   };
 
   const handleCreateGuide = () => {
-   
-navigation.navigate('Guides');
-
+    navigation.navigate('Guides');
   };
 
   const handleEditProfilePicture = () => {
@@ -43,15 +50,20 @@ navigation.navigate('Guides');
     setSheetVisible(false);
   };
 
-
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Header */}
         <View style={styles.profileHeader}>
           <View style={styles.avatarContainer}>
             <Image source={{ uri: userPhotoURL }} style={styles.avatar} />
-            <TouchableOpacity style={styles.editIcon} onPress={handleEditProfilePicture}>
+            <TouchableOpacity
+              style={styles.editIcon}
+              onPress={handleEditProfilePicture}
+            >
               <Ionicons name="pencil" size={16} color="#000" />
             </TouchableOpacity>
           </View>
@@ -73,10 +85,22 @@ navigation.navigate('Guides');
         {/* Tabs */}
         <View style={styles.tabs}>
           <TouchableOpacity onPress={() => setActiveTab('Trips')}>
-            <Text style={activeTab === 'Trips' ? styles.activeTab : styles.inactiveTab}>Trips</Text>
+            <Text
+              style={
+                activeTab === 'Trips' ? styles.activeTab : styles.inactiveTab
+              }
+            >
+              Trips
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setActiveTab('Guides')}>
-            <Text style={activeTab === 'Guides' ? styles.activeTab : styles.inactiveTab}>Guides</Text>
+            <Text
+              style={
+                activeTab === 'Guides' ? styles.activeTab : styles.inactiveTab
+              }
+            >
+              Guides
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -84,7 +108,10 @@ navigation.navigate('Guides');
         {activeTab === 'Trips' && (
           <View style={styles.emptyState}>
             <Text>You haven't planned any trips yet.</Text>
-            <TouchableOpacity style={styles.planTripButton} onPress={handlePlanTrip}>
+            <TouchableOpacity
+              style={styles.planTripButton}
+              onPress={handlePlanTrip}
+            >
               <Text style={styles.planTripText}>Start planning a trip</Text>
             </TouchableOpacity>
           </View>
@@ -93,7 +120,10 @@ navigation.navigate('Guides');
         {activeTab === 'Guides' && (
           <View style={styles.emptyState}>
             <Text>You haven't created any guides yet.</Text>
-            <TouchableOpacity style={styles.planTripButton} onPress={handleCreateGuide}>
+            <TouchableOpacity
+              style={styles.planTripButton}
+              onPress={handleCreateGuide}
+            >
               <Text style={styles.planTripText}>Create your first guide</Text>
             </TouchableOpacity>
           </View>
@@ -107,28 +137,43 @@ navigation.navigate('Guides');
 
       {/* Bottom Sheet */}
       <Modal visible={isSheetVisible} transparent animationType="slide">
-        <TouchableOpacity style={styles.sheetOverlay} activeOpacity={1} onPress={closeSheet}>
+        <TouchableOpacity
+          style={styles.sheetOverlay}
+          activeOpacity={1}
+          onPress={closeSheet}
+        >
           <View style={styles.sheetContainer}>
             <Text style={styles.sheetTitle}>Change profile picture</Text>
 
-            <TouchableOpacity style={styles.sheetButton} onPress={() => {
-              // TODO: Facebook logic
-              closeSheet();
-            }}>
-              <Text style={styles.facebookText}>Use Facebook profile picture</Text>
+            <TouchableOpacity
+              style={styles.sheetButton}
+              onPress={() => {
+                // TODO: Facebook logic
+                closeSheet();
+              }}
+            >
+              <Text style={styles.facebookText}>
+                Use Facebook profile picture
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.sheetButton} onPress={() => {
-              // TODO: Open camera
-              closeSheet();
-            }}>
+            <TouchableOpacity
+              style={styles.sheetButton}
+              onPress={() => {
+                // TODO: Open camera
+                closeSheet();
+              }}
+            >
               <Text>Take photo</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.sheetButton} onPress={() => {
-              // TODO: Open gallery
-              closeSheet();
-            }}>
+            <TouchableOpacity
+              style={styles.sheetButton}
+              onPress={() => {
+                // TODO: Open gallery
+                closeSheet();
+              }}
+            >
               <Text>Choose from library</Text>
             </TouchableOpacity>
           </View>
@@ -160,8 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: '#ddd',
     borderWidth: 2,
-    borderColor: '#fff' ,
-  
+    borderColor: '#fff',
   },
   editIcon: {
     position: 'absolute',

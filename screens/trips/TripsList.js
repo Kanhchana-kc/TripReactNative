@@ -48,7 +48,8 @@ export default function TripList({ navigation }) {
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Detail', { id: item.id })}
+        onPress={() => navigation.navigate('TripsDetail', { id: item.id })
+}
         style={{ flex: 1 }}
       >
         <Text style={styles.destination}>{item.destination}</Text>
@@ -64,7 +65,7 @@ export default function TripList({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Button title="Add Trip" onPress={() => navigation.navigate('Create')} />
+      <Button title="Add Trip" onPress={() => navigation.navigate('CreateTrips')} />
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id.toString()}

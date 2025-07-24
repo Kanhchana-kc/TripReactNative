@@ -66,7 +66,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
       {/* MyTrip */}
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => navigation.navigate('MyTrip')}
+        onPress={() => navigation.navigate('Trips')}
       >
         <Ionicons
           name="briefcase-outline"
