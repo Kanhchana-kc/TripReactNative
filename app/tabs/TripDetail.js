@@ -1,7 +1,8 @@
 import React from 'react'
+import { View } from 'react-native'
 
 export default function TripDetail() {
   return (
-    <div>TripDetail</div>
+    <View>TripDetail</View>
   )
 }

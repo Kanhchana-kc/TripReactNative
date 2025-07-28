@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchScreen from '../../screens/SearchScreen';
-
+import TripsDetail from '../../screens/trips/tripsDetail';
 const featuredTrips = [
   {
     id: '1',

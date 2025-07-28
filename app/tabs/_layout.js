@@ -4,16 +4,21 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import DiscoverScreen from './discover';
-import MyTripScreen from './mytrip';
+import MyTripScreen from './mytrip'; // not used by custom tab
 import ProfileScreen from './profile';
 import Home from './home';
 import Add from './add';
-import SearchScreen from '../../screens/SearchScreen'; // check path
+import SearchScreen from '../../screens/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 
 function CustomTabBar({ state, descriptors, navigation }) {
   const currentRoute = state.routeNames[state.index];
+
+  // If the current route is Add or SearchScreen, hide the custom tab bar
+  if (currentRoute === 'Add') {
+    return null;
+  }
 
   return (
     <View style={styles.tabContainer}>
@@ -66,14 +71,14 @@ function CustomTabBar({ state, descriptors, navigation }) {
       {/* MyTrip */}
       <TouchableOpacity
         style={styles.tabButton}
-        onPress={() => navigation.navigate('Trips')}
+        onPress={() => navigation.navigate('TripList')}
       >
         <Ionicons
           name="briefcase-outline"
           size={24}
-          color={currentRoute === 'MyTrip' ? '#673ab7' : '#222'}
+          color={currentRoute === 'TripList' ? '#673ab7' : '#222'}
         />
-        <Text style={currentRoute === 'MyTrip' ? styles.active : styles.inactive}>
+        <Text style={currentRoute === 'TripList' ? styles.active : styles.inactive}>
           MyTrip
         </Text>
       </TouchableOpacity>
@@ -96,6 +101,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
   );
 }
 
+
 export default function TabsLayout() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
@@ -114,7 +120,7 @@ export default function TabsLayout() {
         component={Add}
         options={{
           headerShown: false,
-          tabBarButton: () => null, // hide default tab bar button
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen
@@ -127,14 +133,14 @@ export default function TabsLayout() {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="SearchScreen"
         component={SearchScreen}
         options={{
           headerShown: false,
           tabBarButton: () => null,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
