@@ -23,12 +23,12 @@ function CustomTabBar({ state, descriptors, navigation }) {
   return (
     <View style={styles.tabContainer}>
       {/* Search Icon */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{ position: 'absolute', right: 20, top: -30 }}
         onPress={() => navigation.navigate('SearchScreen')}
       >
         <Ionicons name="search" size={24} color="#000" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* Home */}
       <TouchableOpacity
@@ -156,6 +156,10 @@ const styles = StyleSheet.create({
   tabButton: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5, 
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
   addButton: {
     position: 'absolute',
