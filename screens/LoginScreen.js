@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -18,11 +18,12 @@ const LoginScreen = () => {
   const [errors, setErrors] = useState({});
 
   const navigation = useNavigation();
+  const passwordRef = useRef(null); // reference for password field
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        navigation.replace('tabs'); // Change 'Home' to 'tabs'
+        navigation.replace('tabs');
       }
     });
 
@@ -70,15 +71,20 @@ const LoginScreen = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
+          returnKeyType="next"
+          onSubmitEditing={() => passwordRef.current?.focus()}
         />
         {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
         <TextInput
+          ref={passwordRef}
           placeholder="Password"
           value={password}
           onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
+          returnKeyType="done"
+          onSubmitEditing={handleLogin}
         />
         {errors.password && (
           <Text style={styles.errorText}>{errors.password}</Text>

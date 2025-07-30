@@ -37,7 +37,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
       >
         <Ionicons
           name="home-outline"
-          size={24}
+          size={20}
           color={currentRoute === 'home' ? '#673ab7' : '#222'}
         />
         <Text style={currentRoute === 'home' ? styles.active : styles.inactive}>
@@ -51,12 +51,12 @@ function CustomTabBar({ state, descriptors, navigation }) {
         onPress={() => navigation.navigate('Discover')}
       >
         <Ionicons
-          name="search-outline"
-          size={24}
-          color={currentRoute === 'Discover' ? '#673ab7' : '#222'}
+          name="pricetags-outline"
+          size={20}
+          color={currentRoute === 'Discover' ? 'rgba(103, 58, 183, 1)' : '#6b7280'}
         />
-        <Text style={currentRoute === 'Discover' ? styles.active : styles.inactive}>
-          Discover
+        <Text style={currentRoute === 'Discover' ? styles.activeLabel : styles.inactiveLabel}>
+          Deals
         </Text>
       </TouchableOpacity>
 
@@ -65,7 +65,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
         style={styles.addButton}
         onPress={() => navigation.navigate('Add')}
       >
-        <Ionicons name="add" size={32} color="#fff" />
+        <Ionicons name="add" size={20} color="#fff" />
       </TouchableOpacity>
 
       {/* MyTrip */}
@@ -75,8 +75,8 @@ function CustomTabBar({ state, descriptors, navigation }) {
       >
         <Ionicons
           name="briefcase-outline"
-          size={24}
-          color={currentRoute === 'TripList' ? '#673ab7' : '#222'}
+          size={20}
+          color={currentRoute === 'TripList' ? 'rgba(103, 58, 183, 1)' : '#222'}
         />
         <Text style={currentRoute === 'TripList' ? styles.active : styles.inactive}>
           MyTrip
@@ -90,7 +90,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
       >
         <Ionicons
           name="person-outline"
-          size={24}
+          size={20}
           color={currentRoute === 'Profile' ? '#673ab7' : '#222'}
         />
         <Text style={currentRoute === 'Profile' ? styles.active : styles.inactive}>
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
     bottom: 20,
     alignSelf: 'center',
     backgroundColor: '#f00',
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -22,6 +22,11 @@ const RegisterScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
+
+  // Create refs for inputs to handle keyboard navigation
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const confirmRef = useRef(null);
 
   const validate = () => {
     let valid = true;
@@ -52,67 +57,90 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = async () => {
-   if (!validate()) return;
+    if (!validate()) return;
 
-  signInWithEmailAndPassword(auth, email.trim(), password)
-    .then((userCredentials) => {
-      const user = userCredentials.user;
-      console.log('Logged in with:', user.email);
-    })
-    .catch((error) => {
-      let message = 'An unexpected error occurred. Please try again.';
+    // Note: You imported createUserWithEmailAndPassword, but your code calls signInWithEmailAndPassword
+    // To register a new user, you need createUserWithEmailAndPassword here:
+    try {
+      setLoading(true);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
+      const user = userCredential.user;
 
-      if (error.code === 'auth/invalid-email') {
-        message = 'Please enter a valid email address.';
-      } else if (error.code === 'auth/user-not-found') {
-        message = 'No account found with this email.';
-      } else if (error.code === 'auth/wrong-password') {
-        message = 'Incorrect password. Please try again.';
-      }
+      // Optionally save username to Firestore (example)
+      await setDoc(doc(db, 'users', user.uid), {
+        username: username.trim(),
+        email: email.trim(),
+        createdAt: serverTimestamp(),
+      });
 
-      alert(message);
-    });
+      console.log('Registered with:', user.email);
+      setLoading(false);
+      navigation.replace('tabs'); // Or your desired screen
+    } catch (error) {
+      setLoading(false);
+      alert(error.message);
+    }
   };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <View style={styles.inputContainer}>
+
         <TextInput
           placeholder="Username"
           value={username}
           onChangeText={setUsername}
           style={styles.input}
+          returnKeyType="next"
+          onSubmitEditing={() => emailRef.current.focus()}
+          blurOnSubmit={false}
         />
         {errors.username && (
           <Text style={styles.errorText}>{errors.username}</Text>
         )}
 
         <TextInput
+          ref={emailRef}
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
           style={styles.input}
           autoCapitalize="none"
+          keyboardType="email-address"
+          returnKeyType="next"
+          onSubmitEditing={() => passwordRef.current.focus()}
+          blurOnSubmit={false}
         />
         {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
         <TextInput
+          ref={passwordRef}
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
           style={styles.input}
           secureTextEntry
+          returnKeyType="next"
+          onSubmitEditing={() => confirmRef.current.focus()}
+          blurOnSubmit={false}
         />
         {errors.password && (
           <Text style={styles.errorText}>{errors.password}</Text>
         )}
 
         <TextInput
+          ref={confirmRef}
           placeholder="Confirm Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           style={styles.input}
           secureTextEntry
+          returnKeyType="done"
+          onSubmitEditing={handleRegister}
         />
         {errors.confirmPassword && (
           <Text style={styles.errorText}>{errors.confirmPassword}</Text>
@@ -170,7 +198,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: Colors.color04, // use your theme color
+    backgroundColor: Colors.color04,
     width: '100%',
     paddingVertical: 15,
     paddingHorizontal: 60,

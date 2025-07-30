@@ -9,18 +9,38 @@ import {
   StyleSheet,
 } from 'react-native';
 import api from '../../api/api';
+import { auth } from '../../firebase';  // Adjust path to your firebase config
 
 export default function TripList({ navigation }) {
   const [trips, setTrips] = useState([]);
+  const [userId, setUserId] = useState(null);
 
+  // Get current user ID on mount
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserId(user.uid);
+    } else {
+      setUserId(null);
+    }
+  }, []);
+
+  // Fetch trips filtered by userId
   const fetchTrips = async () => {
+    if (!userId) return; // wait for userId
+
     try {
-      const res = await api.get('/trips');
+      const res = await api.get(`/trips?userId=${userId}`); // pass userId to API
       setTrips(res.data);
     } catch (error) {
       Alert.alert('Error', 'Failed to fetch trips');
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', fetchTrips);
+    return unsubscribe;
+  }, [navigation, userId]); // refetch when userId changes
 
   const deleteTrip = async (id) => {
     Alert.alert('Confirm', 'Are you sure you want to delete?', [
@@ -40,16 +60,10 @@ export default function TripList({ navigation }) {
     ]);
   };
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', fetchTrips);
-    return unsubscribe;
-  }, [navigation]);
-
   const renderItem = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('TripsDetail', { id: item.id })
-}
+        onPress={() => navigation.navigate('TripsDetail', { id: item.id })}
         style={{ flex: 1 }}
       >
         <Text style={styles.destination}>{item.destination}</Text>
@@ -69,9 +83,7 @@ export default function TripList({ navigation }) {
       <FlatList
         data={trips}
         keyExtractor={(item) => item.id.toString()}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No trips found.</Text>
-        }
+        ListEmptyComponent={<Text style={styles.emptyText}>No trips found.</Text>}
         renderItem={renderItem}
       />
     </View>
